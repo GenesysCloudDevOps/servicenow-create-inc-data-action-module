@@ -1,0 +1,48 @@
+{
+  "name": "CreateINC",
+  "integrationType": "custom-rest-actions",
+  "actionType": "custom",
+  "config": {
+    "request": {
+      "requestUrlTemplate": "https://${input.Domain}.service-now.com/api/now/table/incident",
+      "requestType": "POST",
+      "headers": {
+        "Content-Type": "application/json"
+      },
+      "requestTemplate": "{ \"short_description\":\"${input.INC_Description}\", \"contact_type\":\"self-service\", \"caller_id\": \"${input.CallerID}\" }"
+    },
+    "response": {
+      "translationMap": {},
+      "translationMapDefaults": {},
+      "successTemplate": "${rawResult}"
+    }
+  },
+  "contract": {
+    "input": {
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "Domain": {
+            "type": "string",
+            "description": "The Service Now instance domain e.g. https://*domain*.service-now.com"
+          },
+          "CallerID": {
+            "type": "string"
+          },
+          "INC_Description": {
+            "type": "string"
+          }
+        },
+        "additionalProperties": true
+      }
+    },
+    "output": {
+      "successSchema": {
+        "type": "object",
+        "properties": {},
+        "additionalProperties": true
+      }
+    }
+  },
+  "secure": false
+}
